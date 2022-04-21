@@ -108,4 +108,17 @@ describe('distributeProportionalValue', () => {
       expect(sumFinalPrices).to.deep.equal(expectedPrice);
     }
   });
+  it('should handle zero values correctly', () => {
+    const prices = [{ price: 0 }, { price: 0 }];
+
+    const distributed = distributeProportionalValue(
+      prices,
+      (value, i) => value[i],
+      item => item.price,
+      (item, discount) => ({ ...item, discount }),
+      {distribute: 0},
+    );
+
+    expect(distributed).to.deep.equal([{ price: 0, discount: 0 }, { price: 0, discount: 0 }]);
+  });
 });
