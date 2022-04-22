@@ -46,14 +46,14 @@ const makeIterator = (list, next, getter, setter) => {
 };
 
 const getProportionalValue = (value, valueToDistribute, total) => {
-    if (!total) return 0;
+    if (!total || !value) return 0;
     if (total === value) return valueToDistribute;
     return new bigNumber(valueToDistribute)
       .dividedBy(total)
       .multipliedBy(value);
 };
 
-const sum = (values, precision) => values.reduce((acc, v) => acc.plus(v), new bigNumber(0)).decimalPlaces(precision);
+const sum = (values, precision) => +values.reduce((acc, v) => acc.plus(v), new bigNumber(0)).decimalPlaces(precision);
 
 export const distributeProportionalValue = (data, next, getter, setter, options) => {
     const defaultOptions = { precision: 2 };
